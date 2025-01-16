@@ -1,0 +1,15 @@
+{
+    "characters": {
+      "princess": {
+        "description": "一个住在城堡里的善良公主，喜欢帮助别人。",
+        "image": "/static/images/princess.png"
+      }
+    },
+    "scenes": {
+      "forest": {
+        "description": "一个充满神秘生物的魔法森林。",
+        "image": "/static/images/forest.png"
+      }
+    }
+  }
+  

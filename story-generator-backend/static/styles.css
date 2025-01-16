@@ -1,0 +1,69 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  
+  h1, h2 {
+    color: #333;
+  }
+  
+  .character-list, .scene-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px 0;
+  }
+  
+  .character, .scene {
+    border: 2px solid #ccc;
+    padding: 10px;
+    cursor: pointer;
+    width: 150px;
+    text-align: center;
+    transition: border-color 0.3s, background-color 0.3s;
+  }
+  
+  .character img, .scene img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+  
+  .character.selected, .scene.selected {
+    border-color: #007BFF;
+    background-color: #f0f8ff;
+  }
+  
+  .character:hover, .scene:hover {
+    border-color: #007BFF;
+  }
+  
+  .character.selected, .scene.selected {
+    border-color: #007BFF;
+    background-color: #f0f8ff;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  #output {
+    margin-top: 30px;
+  }
+  
+  #audio {
+    display: none;
+    margin-top: 10px;
+  }
+  

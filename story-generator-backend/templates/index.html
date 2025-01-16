@@ -1,34 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>宝宝故事生成器</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/script.js" defer></script>
+  <title>Story Generator</title>
 </head>
 <body>
-    <h1>宝宝故事生成器</h1>
-    <textarea id="elements" placeholder="请输入故事元素，例如：米奇、森林、魔法"></textarea>
-    <button onclick="generateStory()">生成故事</button>
+  <h1>故事生成器</h1>
+
+  <div id="characters">
+    <h2>选择角色</h2>
+    <div class="character-list"></div>
+  </div>
+  
+  <div id="scenes">
+    <h2>选择场景</h2>
+    <div class="scene-list"></div>
+  </div>
+  
+  <button onclick="generateStory()">生成故事</button>
+  
+  <div id="output">
     <h2>生成的故事</h2>
     <p id="story"></p>
-    <audio id="audioPlayer" controls></audio>
-
-    <script>
-        async function generateStory() {
-            const elements = document.getElementById("elements").value.split(/,|，/);
-            const response = await fetch('/api/generate_story', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ elements })
-            });
-            const data = await response.json();
-            if (data.story) {
-                document.getElementById("story").innerText = data.story;
-                document.getElementById("audioPlayer").src = "/api/play_audio";
-            } else {
-                alert("生成故事失败：" + data.error);
-            }
-        }
-    </script>
+    <audio id="audio" controls></audio>
+  </div>
 </body>
 </html>
