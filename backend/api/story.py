@@ -1,7 +1,7 @@
 import logging
 from flask import Blueprint, request, jsonify
-from app.services.story_generator.story_api import generate_story_text
-from app.services.story_generator.prompts import format_prompt
+from services.story_generator.story_api import generate_story_text
+from services.story_generator.prompts import format_prompt
 
 # Configure logging (only once)
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")

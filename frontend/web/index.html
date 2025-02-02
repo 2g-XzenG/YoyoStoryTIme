@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>YoyoStoryTime Web App</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    form { margin-bottom: 20px; }
+    label { display: block; margin-bottom: 10px; }
+    input { width: 300px; padding: 5px; margin-bottom: 10px; }
+    button { padding: 5px 10px; }
+    #story { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>YoyoStoryTime</h1>
+  <form id="storyForm">
+    <label for="characters">Characters (comma-separated):</label>
+    <input type="text" id="characters" name="characters" placeholder="Alice, Bob">
+
+    <label for="scene">Scene:</label>
+    <input type="text" id="scene" name="scene" placeholder="forest">
+
+    <button type="submit">Generate Story</button>
+  </form>
+
+  <div id="story">
+    <h2>Generated Story:</h2>
+    <p id="storyContent"></p>
+  </div>
+
+  <script>
+    // Listen for the form submission event.
+    document.getElementById('storyForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting normally
+
+      // Get the input values.
+      const charactersInput = document.getElementById('characters').value;
+      const sceneInput = document.getElementById('scene').value;
+      // Convert the comma-separated string into an array of names.
+      const charactersArray = charactersInput.split(',').map(name => name.trim());
+
+      // Send the data to the backend API.
+      fetch('http://127.0.0.1:8008/api/story/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ characters: charactersArray, scene: sceneInput })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Assume the API returns the generated story in a field called "story".
+        const storyContent = data.story || JSON.stringify(data);
+        document.getElementById('storyContent').textContent = storyContent;
+      })
+      .catch(error => {
+        console.error('Error generating story:', error);
+        document.getElementById('storyContent').textContent = 'Error generating story.';
+      });
+    });
+  </script>
+</body>
+</html>

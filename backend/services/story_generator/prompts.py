@@ -1,4 +1,4 @@
-from app.utils.config_loader import load_elements
+from utils.config_loader import load_elements
 
 def format_prompt(characters, scene):
     """
