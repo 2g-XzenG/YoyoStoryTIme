@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend  
+    ports:
+      - "5008:5008"
+    env_file:
+      - ./backend/.env  # OPENAI_API_KEY
+    volumes:
+      - ./backend:/app
+    restart: always
