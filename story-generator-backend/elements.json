@@ -8,7 +8,7 @@
     "scenes": {
       "forest": {
         "description": "一个充满神秘生物的魔法森林。",
-        "image": "/static/images/forest.png"
+        "image": "/static/images/magichouse.png"
       }
     }
   }
