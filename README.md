@@ -28,7 +28,7 @@ curl -X POST http://127.0.0.1:8008/api/story/generate \
 
 ## ✅ To-Do List
 ### 🔹 Backend (API)  
-- [ ] **Story Generation API**: AI-generated stories with structured templates.  
+- [x] **Story Generation API**: AI-generated stories with structured templates.  
 - [ ] **Audio Generation API**: Convert generated stories into speech using TTS.  
 - [ ] **Comic Generation API**: Generate visual comics based on the story.  
 
