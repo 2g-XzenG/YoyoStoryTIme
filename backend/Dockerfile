@@ -15,10 +15,11 @@ COPY . .
 ENV DOCKERIZED=true
 ENV FLASK_APP=app/main.py
 ENV FLASK_RUN_HOST=0.0.0.0
-ENV FLASK_RUN_PORT=5000
+ENV FLASK_RUN_PORT=8008
+ENV FLASK_ENV=development
 
 # Expose the Flask port
-EXPOSE 5000
+EXPOSE 8008
 
 # Run Flask application
-CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
+CMD ["flask", "run", "--host=0.0.0.0", "--port=8008"]
