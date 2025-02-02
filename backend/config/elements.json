@@ -1,0 +1,10 @@
+{
+    "characters": {
+      "Alice": { "description": "Alice is an adventurous girl." },
+      "Bob": { "description": "Bob is a curious explorer." }
+    },
+    "scenes": {
+      "forest": { "description": "A mysterious deep forest full of secrets." }
+    }
+  }
+  
