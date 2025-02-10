@@ -1,7 +1,7 @@
 import logging
 from flask import Blueprint, request, jsonify
-from services.story_generator.story_api import generate_story_text
-from services.story_generator.prompts import format_prompt
+from backend.services.story_generator.story_api import generate_story_text
+from backend.services.story_generator.prompts import format_prompt
 
 # Configure logging (only once)
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -22,19 +22,19 @@ def generate_story():
 
         data = request.get_json()
         characters = data.get("characters", [])
-        scene = data.get("scene", "")
+        scenes = data.get("scenes", "")
 
         # Log received data
         logging.debug(f"Received characters: {characters}")
-        logging.debug(f"Received scene: {scene}")
+        logging.debug(f"Received scene: {scenes}")
 
         # Validate input
-        if not characters or not scene:
+        if not characters or not scenes:
             logging.warning("Missing characters or scene in request")
             return jsonify({"error": "Characters and scene are required."}), 400
 
         # Format prompt
-        prompt = format_prompt(characters, scene)
+        prompt = format_prompt(characters, scenes)
         logging.debug(f"Generated prompt: {prompt}")
 
         # Generate story

@@ -10,6 +10,7 @@ services:
     env_file:
       - ./.env  # Include environment variables (e.g., API keys)
     volumes:
-      - ./backend:/app  # Mount backend code to /app inside the container
+      - ./backend:/app/backend  # Mount backend code to /app/backend inside the container
       - ./frontend/web:/app/frontend/web  # Mount frontend files for dynamic updates
+      - ./shared_resources:/app/shared_resources  # Mount shared resources
     restart: always  # Automatically restart the container if it stops

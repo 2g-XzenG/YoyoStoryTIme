@@ -5,19 +5,16 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy backend dependencies
-COPY backend/requirements.txt .
+COPY backend/requirements.txt /app/backend/requirements.txt
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r /app/backend/requirements.txt
 
-# Copy the backend application files
-COPY backend /app
-
-# Copy the frontend static files
-COPY frontend/web /app/frontend/web
+# Copy the entire project directory
+COPY . /app
 
 # Set environment variables for Flask
-ENV FLASK_APP=main.py
+ENV FLASK_APP=backend.main
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=8008
 ENV FLASK_ENV=development

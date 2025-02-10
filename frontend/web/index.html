@@ -2,63 +2,128 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>YoyoStoryTime Web App</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    form { margin-bottom: 20px; }
-    label { display: block; margin-bottom: 10px; }
-    input { width: 300px; padding: 5px; margin-bottom: 10px; }
-    button { padding: 5px 10px; }
-    #story { margin-top: 20px; }
-  </style>
+  <title>YOYO Web App</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>YoyoStoryTime</h1>
-  <form id="storyForm">
-    <label for="characters">Characters (comma-separated):</label>
-    <input type="text" id="characters" name="characters" placeholder="Alice, Bob">
+  <div class="container">
+    <h1>YOYO Story Generator</h1>
+    <form id="storyForm">
+      <h2>Selectable Characters</h2>
+      <div class="selection-box">
+        <div class="character-images" id="characterImages"></div>
+      </div>
 
-    <label for="scene">Scene:</label>
-    <input type="text" id="scene" name="scene" placeholder="forest">
+      <h2>Selectable Scenes</h2>
+      <div class="selection-box">
+        <div class="scene-images" id="sceneImages"></div>
+      </div>
 
-    <button type="submit">Generate Story</button>
-  </form>
+      <div class="form-group">
+        <button type="submit">Generate Story</button>
+      </div>
+    </form>
 
-  <div id="story">
-    <h2>Generated Story:</h2>
-    <p id="storyContent"></p>
+    <div id="story">
+      <h2>Generated Story:</h2>
+      <p id="storyContent"></p>
+    </div>
   </div>
 
   <script>
-    // Listen for the form submission event.
-    document.getElementById('storyForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent the form from submitting normally
+    const characterImages = {
+      Bruno_Madrigal: '../shared_resources/characters/Bruno_Madrigal.png',
+      Camilo_Render: '../shared_resources/characters/Camilo_Render.webp',
+      Isabela_Madrigal: '../shared_resources/characters/Isabela_Madrigal.png',
+      Luisa_Madrigal: '../shared_resources/characters/Luisa_Madrigal.webp',
+      Mirabel_Madrigal: '../shared_resources/characters/Mirabel_Madrigal.png',
+      Alma_Madrigal: '../shared_resources/characters/Alma_Madrigal.webp'
+    };
 
-      // Get the input values.
-      const charactersInput = document.getElementById('characters').value;
-      const sceneInput = document.getElementById('scene').value;
-      // Convert the comma-separated string into an array of names.
-      const charactersArray = charactersInput.split(',').map(name => name.trim());
+    const sceneImages = {
+      encanto_magic_house: '../shared_resources/scenes/encanto_magic_house.png',
+      disney_magic_kindom: '../shared_resources/scenes/disney_magic_kindom.png'
+    };
 
-      // Send the data to the backend API.
-      fetch('http://127.0.0.1:8008/api/story/generate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ characters: charactersArray, scene: sceneInput })
-      })
-      .then(response => response.json())
-      .then(data => {
-        // Assume the API returns the generated story in a field called "story".
-        const storyContent = data.story || JSON.stringify(data);
-        document.getElementById('storyContent').textContent = storyContent;
-      })
-      .catch(error => {
-        console.error('Error generating story:', error);
-        document.getElementById('storyContent').textContent = 'Error generating story.';
+    const characterImagesContainer = document.getElementById('characterImages');
+    const sceneImagesContainer = document.getElementById('sceneImages');
+
+    Object.keys(characterImages).forEach(character => {
+      const card = document.createElement('div');
+      card.className = 'character-card';
+
+      const img = document.createElement('img');
+      img.src = characterImages[character];
+      img.alt = character;
+
+      const label = document.createElement('label');
+      label.textContent = character.replace(/_/g, ' ');
+
+      card.appendChild(label);
+      card.appendChild(img);
+      characterImagesContainer.appendChild(card);
+
+      card.addEventListener('click', () => {
+        card.classList.toggle('selected');
       });
     });
-  </script>
+
+    Object.keys(sceneImages).forEach(scene => {
+      const card = document.createElement('div');
+      card.className = 'scene-card';
+
+      const img = document.createElement('img');
+      img.src = sceneImages[scene];
+      img.alt = scene;
+
+      const label = document.createElement('label');
+      label.textContent = scene.replace(/_/g, ' ');
+
+      card.appendChild(label);
+      card.appendChild(img);
+      sceneImagesContainer.appendChild(card);
+
+      card.addEventListener('click', () => {
+        card.classList.toggle('selected');
+      });
+    });
+    document.getElementById('storyForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+
+    // Get the input values.
+    const selectedCharacters = Array.from(document.querySelectorAll('.character-card.selected')).map(card => card.querySelector('label').textContent.replace(/ /g, '_'));
+    const selectedScenes = Array.from(document.querySelectorAll('.scene-card.selected')).map(card => card.querySelector('label').textContent.replace(/ /g, '_'));
+
+    // Log the selected characters and scenes for debugging
+    console.log('Selected Characters:', selectedCharacters);
+    console.log('Selected Scenes:', selectedScenes);
+
+    // Check if characters or scenes are missing
+    if (selectedCharacters.length === 0 || selectedScenes.length === 0) {
+      console.error('Error: No characters or scenes selected.');
+      document.getElementById('storyContent').textContent = 'Please select at least one character and one scene.';
+      return;
+    }
+
+    // Send the data to the backend API.
+    fetch('http://127.0.0.1:8008/api/story/generate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ characters: selectedCharacters, scenes: selectedScenes })
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Assume the API returns the generated story in a field called "story".
+      const storyContent = data.story || JSON.stringify(data);
+      document.getElementById('storyContent').textContent = storyContent;
+    })
+    .catch(error => {
+      console.error('Error generating story:', error);
+      document.getElementById('storyContent').textContent = 'Error generating story.';
+    });
+  });
+</script>
 </body>
 </html>
