@@ -2,11 +2,15 @@ version: '3.8'
 
 services:
   backend:
-    build: ./backend  
+    build:
+      context: .  # Build from the root directory
+      dockerfile: Dockerfile  # Specify the Dockerfile
     ports:
-      - "8008:8008"
+      - "8008:8008"  # Map container port 8008 to host port 8008
     env_file:
-      - ./backend/.env  # OPENAI_API_KEY
+      - ./.env  # Include environment variables (e.g., API keys)
     volumes:
-      - ./backend:/app
-    restart: always
+      - ./backend:/app/backend  # Mount backend code to /app/backend inside the container
+      - ./frontend/web:/app/frontend/web  # Mount frontend files for dynamic updates
+      - ./shared_resources:/app/shared_resources  # Mount shared resources
+    restart: always  # Automatically restart the container if it stops

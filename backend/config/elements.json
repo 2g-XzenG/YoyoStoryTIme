@@ -1,10 +1,14 @@
 {
-    "characters": {
-      "Alice": { "description": "Alice is an adventurous girl." },
-      "Bob": { "description": "Bob is a curious explorer." }
-    },
-    "scenes": {
-      "forest": { "description": "A mysterious deep forest full of secrets." }
-    }
+  "characters": {
+    "Alma_Madrigal": { "description": "Alma Madrigal, the matriarch of the Madrigal family, known for her strong leadership and wisdom." },
+    "Bruno_Madrigal": { "description": "Bruno Madrigal, a misunderstood uncle with the gift of seeing the future." },
+    "Camilo_Madrigal": { "description": "Camilo Madrigal, a shapeshifter who loves to entertain and bring joy to others." },
+    "Isabela_Madrigal": { "description": "Isabela Madrigal, the perfectionist who can make plants grow effortlessly and beautifully." },
+    "Luisa_Madrigal": { "description": "Luisa Madrigal, the strong and reliable sister with the gift of super strength." },
+    "Mirabel_Madrigal": { "description": "Mirabel Madrigal, the only Madrigal without a magical gift but full of determination and love for her family." }
+  },
+  "scenes": {
+    "disney_magic_kingdom": { "description": "Disney's Magic Kingdom, a magical place filled with enchanting adventures and iconic attractions." },
+    "encanto_magic_house": { "description": "The Madrigal family's magical house, full of wonder and charm, known as the Casita." }
   }
-  
+}

@@ -14,21 +14,29 @@ YoyoStoryTime is a Flask-based API that generates AI-powered bedtime stories usi
 git clone <repo-url>
 cd YoyoStoryTime
 ```
-### 2️⃣ Start the Docker
-```bash
-docker compose up --build -d
+
+### 2️⃣ Create the .env file
+```
+OPENAI_API_KEY=your_openai_api_key
 ```
 
-### 3️⃣ Test the API
+### 3️⃣ Start the Docker & Run the Flask Application
+```bash
+docker compose up --build 
+```
+
+### 4️⃣ Test the API
 ```bash
 curl -X POST http://127.0.0.1:8008/api/story/generate \
      -H "Content-Type: application/json" \
      -d '{"characters": ["Alice", "Bob"], "scene": "forest"}'
 ```
 
+###
+
 ## ✅ To-Do List
 ### 🔹 Backend (API)  
-- [ ] **Story Generation API**: AI-generated stories with structured templates.  
+- [x] **Story Generation API**: AI-generated stories with structured templates.  
 - [ ] **Audio Generation API**: Convert generated stories into speech using TTS.  
 - [ ] **Comic Generation API**: Generate visual comics based on the story.  
 
