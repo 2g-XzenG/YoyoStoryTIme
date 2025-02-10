@@ -22,7 +22,7 @@ def generate_story():
 
         data = request.get_json()
         characters = data.get("characters", [])
-        scenes = data.get("scenes", "")
+        scenes = data.get("scenes", [])
 
         # Log received data
         logging.debug(f"Received characters: {characters}")
