@@ -9,7 +9,9 @@ def create_app():
 
     # Register the API blueprint
     from backend.api.story import story_bp  # Adjust import path if necessary
+    from backend.api.tts import tts_bp  # Import the TTS blueprint
     app.register_blueprint(story_bp, url_prefix="/api/story")
+    app.register_blueprint(tts_bp, url_prefix="/api/tts")  # Register the TTS blueprint
 
     # Serve the index.html file for the root URL
     @app.route("/")

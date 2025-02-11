@@ -15,6 +15,6 @@ def generate_story_text(prompt):
             {"role": "system", "content": "你是一个充满想象力的中文故事生成器。"},
             {"role": "user", "content": f"请根据以下内容生成一个适合宝宝的中文故事：{prompt}"}
         ],
-        max_tokens=2000
+        max_tokens=1000
     )
     return story_response.choices[0].message.content.strip()

@@ -20,24 +20,33 @@
       </div>
 
       <div class="form-group">
-        <button type="submit">Generate Story</button>
+        <button type="submit" class="half-width">Generate Story</button>
+        <button type="button" id="readStoryButton" class="half-width" style="display: none;">Read Story</button>
       </div>
     </form>
 
-    <div id="story">
-      <h2>Generated Story:</h2>
-      <p id="storyContent"></p>
+    <div id="storyContainer">
+      <div id="storyContentContainer">
+        <h2>Generated Story:</h2>
+        <div id="storyContent"></div>
+      </div>
+      <div id="storyControls">
+        <audio id="storyAudio" controls style="display: none;"></audio>
+      </div>
     </div>
   </div>
 
   <script>
     const characterImages = {
-      Bruno_Madrigal: '../shared_resources/characters/Bruno_Madrigal.png',
-      Camilo_Render: '../shared_resources/characters/Camilo_Render.webp',
-      Isabela_Madrigal: '../shared_resources/characters/Isabela_Madrigal.png',
-      Luisa_Madrigal: '../shared_resources/characters/Luisa_Madrigal.webp',
-      Mirabel_Madrigal: '../shared_resources/characters/Mirabel_Madrigal.png',
-      Alma_Madrigal: '../shared_resources/characters/Alma_Madrigal.webp'
+      Bruno_Madrigal: '../shared_resources/characters/Encanto/Bruno_Madrigal.png',
+      Camilo_Render: '../shared_resources/characters/Encanto/Camilo_Render.webp',
+      Isabela_Madrigal: '../shared_resources/characters/Encanto/Isabela_Madrigal.png',
+      Luisa_Madrigal: '../shared_resources/characters/Encanto/Luisa_Madrigal.webp',
+      Mirabel_Madrigal: '../shared_resources/characters/Encanto/Mirabel_Madrigal.png',
+      Alma_Madrigal: '../shared_resources/characters/Encanto/Alma_Madrigal.webp',
+      Ethan: '../shared_resources/characters/Personal/Ethan.jpg',
+      Magnus: '../shared_resources/characters/Personal/Magnus.jpg',
+      Yiyue: '../shared_resources/characters/Personal/Yiyue.jpg'
     };
 
     const sceneImages = {
@@ -87,43 +96,71 @@
         card.classList.toggle('selected');
       });
     });
+
     document.getElementById('storyForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the form from submitting normally
+      event.preventDefault(); // Prevent the form from submitting normally
 
-    // Get the input values.
-    const selectedCharacters = Array.from(document.querySelectorAll('.character-card.selected')).map(card => card.querySelector('label').textContent.replace(/ /g, '_'));
-    const selectedScenes = Array.from(document.querySelectorAll('.scene-card.selected')).map(card => card.querySelector('label').textContent.replace(/ /g, '_'));
+      // Get the input values.
+      const selectedCharacters = Array.from(document.querySelectorAll('.character-card.selected')).map(card => card.querySelector('label').textContent.replace(/ /g, '_'));
+      const selectedScenes = Array.from(document.querySelectorAll('.scene-card.selected')).map(card => card.querySelector('label').textContent.replace(/ /g, '_'));
 
-    // Log the selected characters and scenes for debugging
-    console.log('Selected Characters:', selectedCharacters);
-    console.log('Selected Scenes:', selectedScenes);
+      // Log the selected characters and scenes for debugging
+      console.log('Selected Characters:', selectedCharacters);
+      console.log('Selected Scenes:', selectedScenes);
 
-    // Check if characters or scenes are missing
-    if (selectedCharacters.length === 0 || selectedScenes.length === 0) {
-      console.error('Error: No characters or scenes selected.');
-      document.getElementById('storyContent').textContent = 'Please select at least one character and one scene.';
-      return;
-    }
+      // Check if characters or scenes are missing
+      if (selectedCharacters.length === 0 || selectedScenes.length === 0) {
+        console.error('Error: No characters or scenes selected.');
+        document.getElementById('storyContent').textContent = 'Please select at least one character and one scene.';
+        return;
+      }
 
-    // Send the data to the backend API.
-    fetch('http://127.0.0.1:8008/api/story/generate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ characters: selectedCharacters, scenes: selectedScenes })
-    })
-    .then(response => response.json())
-    .then(data => {
-      // Assume the API returns the generated story in a field called "story".
-      const storyContent = data.story || JSON.stringify(data);
-      document.getElementById('storyContent').textContent = storyContent;
-    })
-    .catch(error => {
-      console.error('Error generating story:', error);
-      document.getElementById('storyContent').textContent = 'Error generating story.';
+      // Send the data to the backend API.
+      fetch('/api/story/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ characters: selectedCharacters, scenes: selectedScenes })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Assume the API returns the generated story in a field called "story".
+        const storyContent = data.story || JSON.stringify(data);
+        document.getElementById('storyContent').textContent = storyContent;
+
+        // Show the read story button
+        const readStoryButton = document.getElementById('readStoryButton');
+        readStoryButton.style.display = 'block';
+
+        // Handle the read story button click event
+        readStoryButton.addEventListener('click', function() {
+          // Send the story text to the TTS API
+          fetch('/api/tts/read', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ story: storyContent })
+          })
+          .then(response => response.json())
+          .then(data => {
+            // Set the audio source and play the audio
+            const storyAudio = document.getElementById('storyAudio');
+            storyAudio.src = data.audio_url;
+            storyAudio.style.display = 'block';
+            storyAudio.play();
+          })
+          .catch(error => {
+            console.error('Error generating audio:', error);
+          });
+        });
+      })
+      .catch(error => {
+        console.error('Error generating story:', error);
+        document.getElementById('storyContent').textContent = 'Error generating story.';
+      });
     });
-  });
-</script>
+  </script>
 </body>
 </html>
