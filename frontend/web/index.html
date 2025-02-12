@@ -20,6 +20,11 @@
       </div>
 
       <div class="form-group">
+        <label for="storyLength">Story Length (minutes):</label>
+        <input type="number" id="storyLength" name="storyLength" value="5" min="1" max="60">
+      </div>
+
+      <div class="form-group">
         <button type="submit" class="half-width">Generate Story</button>
         <button type="button" id="readStoryButton" class="half-width" style="display: none;">Read Story</button>
       </div>
@@ -103,10 +108,12 @@
       // Get the input values.
       const selectedCharacters = Array.from(document.querySelectorAll('.character-card.selected')).map(card => card.querySelector('label').textContent.replace(/ /g, '_'));
       const selectedScenes = Array.from(document.querySelectorAll('.scene-card.selected')).map(card => card.querySelector('label').textContent.replace(/ /g, '_'));
+      const storyLength = document.getElementById('storyLength').value;
 
       // Log the selected characters and scenes for debugging
       console.log('Selected Characters:', selectedCharacters);
       console.log('Selected Scenes:', selectedScenes);
+      console.log('Story Length:', storyLength);
 
       // Check if characters or scenes are missing
       if (selectedCharacters.length === 0 || selectedScenes.length === 0) {
@@ -121,7 +128,7 @@
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ characters: selectedCharacters, scenes: selectedScenes })
+        body: JSON.stringify({ characters: selectedCharacters, scenes: selectedScenes, story_length: storyLength })
       })
       .then(response => response.json())
       .then(data => {
