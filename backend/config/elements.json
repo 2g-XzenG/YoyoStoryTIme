@@ -5,7 +5,10 @@
     "Camilo_Render": { "description": "Camilo Madrigal, a shapeshifter who loves to entertain and bring joy to others." },
     "Isabela_Madrigal": { "description": "Isabela Madrigal, the perfectionist who can make plants grow effortlessly and beautifully." },
     "Luisa_Madrigal": { "description": "Luisa Madrigal, the strong and reliable sister with the gift of super strength." },
-    "Mirabel_Madrigal": { "description": "Mirabel Madrigal, the only Madrigal without a magical gift but full of determination and love for her family." }
+    "Mirabel_Madrigal": { "description": "Mirabel Madrigal, the only Madrigal without a magical gift but full of determination and love for her family." },
+    "Yiyue": { "description": "Yiyue is a brave and kind-hearted 4-year-old girl who loves helping others. She has a younger sister and attends Plano Day School. Recently, she returned from an unforgettable trip to Disneyland, where she was mesmerized by the magic of princesses. Her favorite character is Isabela, and she dreams of becoming a princess herself. Yiyue also has a sweet tooth, especially for lollipops, which she enjoys while imagining her fairy-tale adventures." },
+    "Ethan": { "description": "Ethan is a strong and generous 4-year-old boy with a big heart. He has a younger brother and is currently in preschool. Passionate about cars, he can spend hours playing with toy vehicles and imagining thrilling races. He is also a huge fan of Spider-Man and often dreams of swinging through the city like his favorite superhero. His courage and kindness make him a great friend and protector of those around him." },
+    "Magnus": { "description": "Magnus is a fearless and adventurous 4-year-old boy who never backs down from a challenge. He has a younger sister and attends preschool. With an unshakable love for cars and LEGO, he enjoys building incredible creations and embarking on exciting imaginary journeys. His bold spirit and boundless curiosity make him a natural leader, always ready to explore new worlds and create his own thrilling stories." }
   },
   "scenes": {
     "disney_magic_kingdom": { "description": "Disney's Magic Kingdom, a magical place filled with enchanting adventures and iconic attractions." },

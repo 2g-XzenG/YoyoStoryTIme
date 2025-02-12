@@ -23,22 +23,27 @@ def generate_story():
         data = request.get_json()
         characters = data.get("characters", [])
         scenes = data.get("scenes", [])
+        story_length = data.get("story_length", 5)  # Default to 5 minutes if not provided
 
         # Log received data
         logging.debug(f"Received characters: {characters}")
         logging.debug(f"Received scene: {scenes}")
+        logging.debug(f"Story length (minutes): {story_length}")
 
         # Validate input
         if not characters or not scenes:
             logging.warning("Missing characters or scene in request")
             return jsonify({"error": "Characters and scene are required."}), 400
 
+        # Convert story length from minutes to tokens (approx. 150 tokens per minute)
+        min_tokens = int(story_length) * 150   
+
         # Format prompt
         prompt = format_prompt(characters, scenes)
         logging.debug(f"Generated prompt: {prompt}")
 
         # Generate story
-        story_text = generate_story_text(prompt)
+        story_text = generate_story_text(prompt, min_tokens=min_tokens)
         logging.info("Story generated successfully")
 
         return jsonify({"story": story_text}), 200
