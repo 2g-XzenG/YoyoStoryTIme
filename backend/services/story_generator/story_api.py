@@ -13,9 +13,6 @@ def generate_story_text(prompt, min_tokens=1000, max_tokens=4000):
     total_story = ""
     current_token_count = 0
 
-    # 为每次生成设置一个 token 上限，防止单次请求生成过多内容
-    # 这里选择每次生成的最大 token 数量为 min(min_tokens, max_tokens)
-
     while current_token_count < min_tokens:
         messages = [
             {
