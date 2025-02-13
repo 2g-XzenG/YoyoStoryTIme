@@ -35,8 +35,8 @@ def generate_story():
             logging.warning("Missing characters or scene in request")
             return jsonify({"error": "Characters and scene are required."}), 400
 
-        # Convert story length from minutes to tokens (approx. 150 tokens per minute)
-        min_tokens = int(story_length) * 150   
+        # Convert story length from minutes to tokens (approx. 300 tokens per minute)
+        min_tokens = int(story_length) * 300   
 
         # Format prompt
         prompt = format_prompt(characters, scenes)
